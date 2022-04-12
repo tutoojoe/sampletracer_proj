@@ -58,6 +58,17 @@ class StorekeeperManager(models.Manager):
         return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.STOREKEEPER)
 
 
+class CustomerMore(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=15)
+    address_line_1 = models.CharField(max_length=255)
+    address_line_1 = models.CharField(max_length=255, blank=True, null=True)
+    country = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.user.email
+
+
 class NewUser(User):
     objects = NewUserManager()
 
@@ -90,6 +101,10 @@ class Manager(User):
 
 class Customer(User):
     objects = CustomerManager()
+
+    @property
+    def more(self):
+        return self.customermore
 
     class Meta:
         proxy = True
