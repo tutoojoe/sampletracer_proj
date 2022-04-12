@@ -33,26 +33,101 @@ class User(AbstractUser):
         return self.email
 
 
+class NewUserManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.NEWUSER)
+
+
+class CustomerManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.CUSTOMER)
+
+
+class ManagerManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.MANAGER)
+
+
+class JuniorEmpManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.JUNIOREMP)
+
+
+class StorekeeperManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.STOREKEEPER)
+
+
 class NewUser(User):
+    objects = NewUserManager()
+
     class Meta:
         proxy = True
+
+    def usertype(self):
+        return "NewUser"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.user_type = User.UserTypes.NEWUSER
+        return super().save(*args, **kwargs)
 
 
 class Manager(User):
+    objects = ManagerManager()
+
     class Meta:
         proxy = True
+
+    def usertype(self):
+        return "Manager"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.user_type = User.UserTypes.MANAGER
+        return super().save(*args, **kwargs)
 
 
 class Customer(User):
+    objects = CustomerManager()
+
     class Meta:
         proxy = True
+
+    def usertype(self):
+        return "Customer"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.user_type = User.UserTypes.CUSTOMER
+        return super().save(*args, **kwargs)
 
 
 class JuniorEmp(User):
+    objects = JuniorEmpManager()
+
     class Meta:
         proxy = True
+
+    def usertype(self):
+        return "JuniorEmployee"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.user_type = User.UserTypes.JUNIOREMP
+        return super().save(*args, **kwargs)
 
 
 class Storekeeper(User):
+    objects = StorekeeperManager()
+
     class Meta:
         proxy = True
+
+    def usertype(self):
+        return "Storekeeper"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.user_type = User.UserTypes.STOREKEEPER
+        return super().save(*args, **kwargs)

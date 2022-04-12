@@ -1,5 +1,10 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
+# from django.db import models
+# from django.contrib.auth import get_user_model
+# from useraccounts.models import User
+
+# User = get_user_model()
 
 
 class CustomUserManager(BaseUserManager):
@@ -33,3 +38,28 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, password, **extra_fields)
+
+
+# class NewUserManager(models.Manager):
+#     def get_queryset(self, *args, **kwargs):
+#         return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.NEWUSER)
+
+
+# class CustomerManager(models.Manager):
+#     def get_queryset(self, *args, **kwargs):
+#         return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.CUSTOMER)
+
+
+# class ManagerManager(models.Manager):
+#     def get_queryset(self, *args, **kwargs):
+#         return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.MANAGER)
+
+
+# class JuniorEmpManager(models.Manager):
+#     def get_queryset(self, *args, **kwargs):
+#         return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.JUNIOREMP)
+
+
+# class StorekeeperManager(models.Manager):
+#     def get_queryset(self, *args, **kwargs):
+#         return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.STOREKEEPER)
