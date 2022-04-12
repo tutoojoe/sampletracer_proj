@@ -29,6 +29,7 @@ class Style(models.Model):
         _("Style description"), max_length=100)
     season = models.ForeignKey(Season, on_delete=models.CASCADE)
     product_group = models.ForeignKey(ProductGroup, on_delete=models.CASCADE)
+    size = models.CharField(max_length=10)
     quantity = models.IntegerField(_("Quantity required"), default=0)
     delivery_date = models.DateField(
         _("Delivery date"), default=datetime.date.today)
