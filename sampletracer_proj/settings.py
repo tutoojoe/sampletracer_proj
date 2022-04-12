@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from private import DB_NAME, DB_ENGINE, DB_USERNAME, HOST, PASSWORD, PORT, SAMPLETRACER_SECRETKEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u4w%9oj)c10ophtc8x)5o1ey+j04&so=cu=!iq)oy)s!gxz2j4'
+SECRET_KEY = SAMPLETRACER_SECRETKEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework_swagger',
 
-    'accounts',
+    'useraccounts',
+    'products',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -77,7 +79,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    
+
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -89,6 +91,14 @@ CORS_ORIGIN_ALLOW_ALL = True
 # ]
 
 ROOT_URLCONF = 'sampletracer_proj.urls'
+
+
+AUTH_USER_MODEL = 'useraccounts.User'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+
 
 TEMPLATES = [
     {
@@ -114,10 +124,24 @@ WSGI_APPLICATION = 'sampletracer_proj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': DB_ENGINE,
+        'NAME': DB_NAME,
+        'USER': DB_USERNAME,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': PORT,
+
     }
+
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -149,8 +173,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 
 JWT_AUTH_COOKIE = 'sampletracer-auth'
