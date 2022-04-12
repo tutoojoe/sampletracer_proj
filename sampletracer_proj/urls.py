@@ -31,6 +31,8 @@ urlpatterns = [
     path('api/user/', include('dj_rest_auth.urls')),
     path('api/user_registration/', include('dj_rest_auth.registration.urls')),
 
+    path('api/products/', include('products.urls')),
+
 
     # dynamic schema for openapi
     path('openapi', get_schema_view(
