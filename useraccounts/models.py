@@ -18,9 +18,10 @@ class User(AbstractUser):
         STOREKEEPER = "STOREKEEPER", "Storekeeper"
 
     user_type = models.CharField(
-        _("Type of user"), max_length=50, choices=UserTypes.choices, default=UserTypes.NEWUSER)
+        _("Type of user"), max_length=50, help_text="User type/role - to be selected from the given list. This will determine the permissions. \nDefault value will be NEWUSER on registration.", choices=UserTypes.choices, default=UserTypes.NEWUSER)
     username = None
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(
+        _('email address'), help_text="Email address of user for registration and login purposes", unique=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
