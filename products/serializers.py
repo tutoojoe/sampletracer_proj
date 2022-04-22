@@ -48,8 +48,9 @@ class StyleCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Style
-        fields = ['style_no', 'style_description', 'season', 'product_group',
-                  'size', 'quantity', 'delivery_date', 'merchandiser', 'customer']
+        fields = "__all__"
+        # fields = ['style_no', 'style_description', 'season', 'product_group',
+        #           'size', 'quantity', 'delivery_date', 'merchandiser', 'customer']
         depth = 0
 
 

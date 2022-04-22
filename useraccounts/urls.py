@@ -11,5 +11,6 @@ urlpatterns = [
          UserDetailView.as_view(), name='user_detail'),
     path('api/customers/', CustomerList.as_view(), name='customer_list'),
 
+
     # path('api/add_user')
 ]
