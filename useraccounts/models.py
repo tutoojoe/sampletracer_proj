@@ -12,7 +12,7 @@ class User(AbstractUser):
 
     class UserTypes(models.TextChoices):
         NEWUSER = "NEWUSER", "NewUser"
-        MANAGER = "MANAGER", "Manager"
+        MERCHANDISER = "MERCHANDISER", "Merchandiser"
         CUSTOMER = "CUSTOMER", "Customer"
         JUNIOREMP = "JUNIOREMP", "JuniorEmp"
         STOREKEEPER = "STOREKEEPER", "Storekeeper"
@@ -44,9 +44,9 @@ class CustomerManager(models.Manager):
         return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.CUSTOMER)
 
 
-class ManagerManager(models.Manager):
+class MerchandiserManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
-        return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.MANAGER)
+        return super().get_queryset(*args, **kwargs).filter(user_type=User.UserTypes.MERCHANDISER)
 
 
 class JuniorEmpManager(models.Manager):
@@ -85,18 +85,18 @@ class NewUser(User):
         return super().save(*args, **kwargs)
 
 
-class Manager(User):
-    objects = ManagerManager()
+class Merchandiser(User):
+    objects = MerchandiserManager()
 
     class Meta:
         proxy = True
 
     def usertype(self):
-        return "Manager"
+        return "Merchandiser"
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.user_type = User.UserTypes.MANAGER
+            self.user_type = User.UserTypes.MERCHANDISER
         return super().save(*args, **kwargs)
 
 

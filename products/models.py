@@ -5,7 +5,7 @@ import datetime
 from useraccounts.models import Customer
 
 from suppliers.models import Suppliers
-from useraccounts.models import Manager
+from useraccounts.models import Merchandiser
 
 # Create your models here.
 
@@ -35,7 +35,7 @@ class Style(models.Model):
     quantity = models.IntegerField(_("Quantity required"), default=0)
     delivery_date = models.DateField(
         _("Delivery date"), default=datetime.date.today)
-    merchandiser = models.ForeignKey(Manager, verbose_name=_(
+    merchandiser = models.ForeignKey(Merchandiser, verbose_name=_(
         "Merchandiser name"), related_name="merchandiser", on_delete=models.CASCADE)
     customer = models.ForeignKey(
         Customer, verbose_name=_("Customer name"), related_name="customer", on_delete=models.CASCADE, null=True, blank=True)

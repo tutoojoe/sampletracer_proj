@@ -33,7 +33,7 @@ class GoogleLogin(SocialLoginView):
 User = get_user_model()
 
 
-class UserList(generics.ListAPIView):
+class UsersListAPIView(generics.ListAPIView):
     """
     Lists out all the uses in the project. View is limited to admin user only.
     """
@@ -41,16 +41,8 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
     # permission_classes = [IsAdminUser]
 
-    # def list(self, request):
-    #     # Note the use of `get_queryset()` instead of `self.queryset`
-    #     queryset = self.get_queryset()
 
-    #     serializer = UserSerializer(queryset, many=True)
-    #     # print(serializer.data)
-    #     return Response(serializer.data)
-
-
-class UpdateUserView(generics.RetrieveUpdateAPIView):
+class UserTypeDetailAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = UserTypeUpdateSerializer
     # permission_classes = [IsAdminUser]
 
@@ -76,7 +68,7 @@ class UpdateUserView(generics.RetrieveUpdateAPIView):
 
 class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserDetailsSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     token_verify
 
@@ -92,6 +84,27 @@ class UserDetailView(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
-class CustomerList(generics.ListAPIView):
+class CustomerListAPIView(generics.ListCreateAPIView):
+    """_Views the list of customers or/and can add customer_
+
+    Args:
+        generics (_type_): _description_
+    """
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+
+
+class CustomerDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """_Customer - Retrieve, Update , Delete details of Customer_
+
+    Args:
+        generics (_pk_): _primary key_
+
+    Returns:
+        _object_: _object details_
+    """
+    serializer_class = CustomerSerializer
+    permission_classes = []
+
+    def get_queryset(self):
+        return Customer.objects.all()

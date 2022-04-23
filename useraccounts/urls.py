@@ -1,15 +1,21 @@
 from django.urls import path
-from useraccounts.views import CustomerList
-
-from useraccounts.views import GoogleLogin, UserList, UpdateUserView, UserDetailView
+from useraccounts.views import GoogleLogin, UsersListAPIView, UserTypeDetailAPIView, CustomerListAPIView, CustomerDetailAPIView
 
 urlpatterns = [
-    path('api/user/google/', GoogleLogin.as_view(), name='google_login'),
-    path('api/userlist/', UserList.as_view(), name='user_list'),
-    path('api/updateuser/<int:pk>/', UpdateUserView.as_view(), name='user_update'),
-    path('api/user_details/<int:pk>/',
-         UserDetailView.as_view(), name='user_detail'),
-    path('api/customers/', CustomerList.as_view(), name='customer_list'),
+    # google auth
+    # path('api/user/google/', GoogleLogin.as_view(), name='google_login'),
+
+    # users
+    path('api/users/', UsersListAPIView.as_view(), name='user_list'),
+    path('api/userdetail/<int:pk>/',
+         UserTypeDetailAPIView.as_view(), name='user_type_detail'),
+
+    # customers
+    path('api/customers/', CustomerListAPIView.as_view(),
+         name='customer_list'),
+    path('api/customerdetail/<int:pk>/',
+         CustomerDetailAPIView.as_view(), name='customer_detail'),
+
 
 
     # path('api/add_user')

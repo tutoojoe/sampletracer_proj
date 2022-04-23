@@ -1,3 +1,4 @@
+
 from dj_rest_auth.serializers import UserDetailsSerializer
 from rest_framework import serializers
 from django.conf import settings
@@ -12,7 +13,8 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 
 # from useraccounts.models import User
 from django.contrib.auth import get_user_model
-from useraccounts.models import Customer
+
+from useraccounts.models import Customer, Merchandiser
 # from useraccounts.views import User
 
 from useraccounts.models import NewUser
@@ -35,4 +37,10 @@ class UserTypeUpdateSerializer(serializers.ModelSerializer):
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
+        fields = ['id', 'first_name', 'last_name', 'email', 'is_active']
+
+
+class MerchandiserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Merchandiser
         fields = ['id', 'first_name', 'last_name', 'email', 'is_active']
