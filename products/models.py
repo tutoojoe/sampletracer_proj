@@ -46,6 +46,7 @@ class Style(models.Model):
     created_on = models.DateTimeField(
         auto_now_add=True)
     edited_on = models.DateTimeField(auto_now=True)
+    details_received_date = models.DateField()
 
     def __str__(self):
         return f'{self.style_no} | Delivery date: {self.delivery_date}'
@@ -136,3 +137,27 @@ class Measurements(models.Model):
 
     def __str__(self):
         return f'{self.mc_name.mc_name} | {self.size}'
+
+
+class Comments(models.Model):
+    class CommentType(models.TextChoices):
+        INITIAL = 'INI', _('Initial Comments')
+        GENERAL = 'GEN', _('General Comments')
+        FITCOMMENTS = 'FIT', _('Fit Comments')
+        SIZESETCOMMENTS = 'SSC', _('Size Set Comments')
+        PPCOMMENTS = 'PPS', _('PP Sample Comments')
+
+    style = models.ForeignKey(
+        Style, related_name="comments", on_delete=models.CASCADE)
+    comment_type = models.CharField(
+        max_length=3, choices=CommentType.choices, default=CommentType.INITIAL)
+    comments = models.TextField(_("Comments"), help_text=_(
+        "Comments received from customer"))
+    created_at = models.DateTimeField(auto_now_add=True)
+    edited_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.style} | {self.comment_type}'
+
+    class Meta:
+        ordering = ["-created_at"]
