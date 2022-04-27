@@ -4,6 +4,8 @@ from telnetlib import STATUS
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import datetime
+
+from pytz import timezone
 from useraccounts.models import Customer
 
 from suppliers.models import Suppliers
@@ -43,6 +45,7 @@ class Style(models.Model):
         Customer, verbose_name=_("Customer name"), related_name="customer", on_delete=models.CASCADE, null=True, blank=True)
     created_on = models.DateTimeField(
         auto_now_add=True)
+    edited_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.style_no} | Delivery date: {self.delivery_date}'
@@ -75,6 +78,11 @@ class Accessories(models.Model):
         # return 'Style No: %s item: %s, Quantity: %f,Supplier: %s' % (self.style_no, self.item_name, self.qty_per_item, self.supplier)
         return 'Style No: %s item: %s | Status: %s' % (self.style_no, self.item_name, self.status)
 
+    class Meta:
+        ordering = ["item_name"]
+        verbose_name = "Accessory"
+        verbose_name_plural = "Accessories"
+
 
 class Processes(models.Model):
     style_no = models.ForeignKey(
@@ -101,6 +109,11 @@ class Processes(models.Model):
     def __str__(self):
         # return f'Process: {self.process_name}, Quantity:{ self.qty_per_item}, Process Quantity:{ self.process_qty},Supplier: {self.supplier}'
         return f'Style No - {self.style_no} | Process - {self.process_name} | Processing Status - { self.status}'
+
+    class Meta:
+        ordering = ["process_name"]
+        verbose_name = "Process"
+        verbose_name_plural = "Processes"
 
 
 class MeasurementChart(models.Model):
