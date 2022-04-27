@@ -1,11 +1,12 @@
 # from useraccounts.models import User
+from urllib import response
 from useraccounts.serializers import CustomerSerializer
 from useraccounts.models import Customer
 from useraccounts.serializers import UserTypeUpdateSerializer
 # from useraccounts.models import User
 from useraccounts.serializers import UserSerializer
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework import generics
 from dj_rest_auth.serializers import UserDetailsSerializer
 from django.contrib.auth import get_user_model
@@ -18,12 +19,14 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework import status
 from rest_framework_simplejwt.views import token_verify
+from rest_framework.views import APIView
+from useraccounts.permissions import MerchUserPermission, NewUserPermission, StoreKeeperPermission
 
 
 # if you want to use Authorization Code Grant, use this
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
-    callback_url = "http://localhost:8000"
+    callback_url = "http://127.0.0.1:8000/api/user/google/callback/"
     client_class = OAuth2Client
 
 # class GoogleLogin(SocialLoginView): # if you want to use Implicit Grant, use this
@@ -108,3 +111,19 @@ class CustomerDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Customer.objects.all()
+
+
+class DashboardAPIView(APIView):
+    permission_classes = [MerchUserPermission]
+
+    def get(self, request, format=None):
+
+        return Response({"message": "New user requested dashboard"})
+
+    def get(self, request, format=None):
+        permission_classes = [MerchUserPermission]
+        return Response({"message": "Merch requested dashboard"})
+
+    def get(self, request, format=None):
+        permission_classes = [StoreKeeperPermission]
+        return Response({"message": "New user requested dashboard"})

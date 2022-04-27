@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from products.models import Style
-from products.serializers import StyleSerializer
+from products.models import MeasurementChart, Style
+from products.serializers import MeasurementItemSerializer, MeasurementSerializer, StyleSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -58,3 +58,15 @@ class ProductGroupListCreateAPIView(generics.ListCreateAPIView):
         product_groups = ProductGroup.objects.all()
         serializer = self.serializer_class(product_groups, many=True)
         return Response(serializer.data)
+
+
+class MeasurementListAPIView(generics.ListCreateAPIView):
+    serializer_class = MeasurementSerializer
+
+    def get_queryset(self):
+        queryset = MeasurementChart.objects.all()
+        return queryset
+
+
+class MeasurementItemsListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = MeasurementItemSerializer

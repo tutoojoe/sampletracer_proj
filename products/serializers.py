@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from products.models import Season, ProductGroup, Processes, Accessories, Style
+from products.models import MeasurementChart, Measurements, Season, ProductGroup, Processes, Accessories, Style
 
 
 class SeasonSerializer(serializers.ModelSerializer):
@@ -74,3 +74,18 @@ class StyleDetailedSerializer(serializers.ModelSerializer):
         fields = ['style_no', 'style_description', 'season', 'season_pk', 'product_group', 'group',
                   'size', 'quantity', 'delivery_date', 'accessories', 'processes']
         depth = 1
+
+
+class MeasurementItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Measurements
+        fields = "__all__"
+
+
+class MeasurementSerializer(serializers.ModelSerializer):
+    measurements = MeasurementItemSerializer(
+        source='measurements_set', many=True, read_only=True)
+
+    class Meta:
+        model = MeasurementChart
+        fields = "__all__"

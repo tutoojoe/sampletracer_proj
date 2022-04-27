@@ -1,4 +1,6 @@
+from ast import Assign
 from email.policy import default
+from telnetlib import STATUS
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import datetime
@@ -53,6 +55,7 @@ class Accessories(models.Model):
         _("Quantity per item"), max_digits=10, decimal_places=2)
     supplier = models.ForeignKey(
         Suppliers, on_delete=models.SET_NULL, blank=True, null=True)
+    # status here
 
     def __str__(self):
         return 'item: %s, Quantity: %f,Supplier: %s' % (self.item_name, self.qty_per_item, self.supplier)
@@ -89,9 +92,9 @@ class Measurements(models.Model):
     size = models.CharField(max_length=100)
     measuringpoint = models.CharField(max_length=200)
     tolerance = models.DecimalField(
-        default=0.5, max_digits=2, decimal_places=2)
+        default=0.5, max_digits=5, decimal_places=2)
     measurement = models.DecimalField(
-        default=0, max_digits=2, decimal_places=2)
+        default=0, max_digits=5, decimal_places=2)
 
     def __str__(self):
         return self.mc_name

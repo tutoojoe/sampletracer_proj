@@ -1,9 +1,13 @@
 from django.urls import path
-from useraccounts.views import GoogleLogin, UsersListAPIView, UserTypeDetailAPIView, CustomerListAPIView, CustomerDetailAPIView
+from useraccounts.views import DashboardAPIView, GoogleLogin, UsersListAPIView, UserTypeDetailAPIView, CustomerListAPIView, CustomerDetailAPIView
 
 urlpatterns = [
     # google auth
-    # path('api/user/google/', GoogleLogin.as_view(), name='google_login'),
+    path('api/user/google/', GoogleLogin.as_view(), name='google_login'),
+
+    # dashboard
+    path('api/dashboard/', DashboardAPIView.as_view(), name='dashboard'),
+
 
     # users
     path('api/users/', UsersListAPIView.as_view(), name='user_list'),
