@@ -4,10 +4,19 @@ from products.models import MeasurementChart, Measurements, Season, ProductGroup
 # Register your models here.
 
 
+class MeasurementsInline(admin.TabularInline):
+    model = Measurements
+    extra = 1
+
+
+class MeasurementChartAdmin(admin.ModelAdmin):
+    inlines = [MeasurementsInline]
+
+
 admin.site.register(Season)
 admin.site.register(ProductGroup)
 admin.site.register(Style)
 admin.site.register(Accessories)
 admin.site.register(Processes)
-admin.site.register(MeasurementChart)
+admin.site.register(MeasurementChart, MeasurementChartAdmin)
 admin.site.register(Measurements)

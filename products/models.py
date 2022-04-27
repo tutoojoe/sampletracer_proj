@@ -41,9 +41,16 @@ class Style(models.Model):
         "Merchandiser name"), related_name="merchandiser", on_delete=models.CASCADE)
     customer = models.ForeignKey(
         Customer, verbose_name=_("Customer name"), related_name="customer", on_delete=models.CASCADE, null=True, blank=True)
+    created_on = models.DateTimeField(
+        auto_now_add=True)
 
     def __str__(self):
-        return f'{self.style_no}'
+        return f'{self.style_no} | Delivery date: {self.delivery_date}'
+
+    class Meta:
+        ordering = ["-created_on"]
+        verbose_name = "Style"
+        verbose_name_plural = "Styles"
 
 
 class Accessories(models.Model):
@@ -55,10 +62,18 @@ class Accessories(models.Model):
         _("Quantity per item"), max_digits=10, decimal_places=2)
     supplier = models.ForeignKey(
         Suppliers, on_delete=models.SET_NULL, blank=True, null=True)
-    # status here
+
+    task_status = models.BooleanField(default=False)
+
+    @property
+    def status(self):
+        if self.task_status:
+            return "Completed"
+        return "Not Completed"
 
     def __str__(self):
-        return 'item: %s, Quantity: %f,Supplier: %s' % (self.item_name, self.qty_per_item, self.supplier)
+        # return 'Style No: %s item: %s, Quantity: %f,Supplier: %s' % (self.style_no, self.item_name, self.qty_per_item, self.supplier)
+        return 'Style No: %s item: %s | Status: %s' % (self.style_no, self.item_name, self.status)
 
 
 class Processes(models.Model):
@@ -71,20 +86,30 @@ class Processes(models.Model):
 
     supplier = models.ForeignKey(
         Suppliers, on_delete=models.SET_NULL, blank=True, null=True)
+    task_status = models.BooleanField(default=False)
+
+    @property
+    def status(self):
+        if self.task_status:
+            return "Completed"
+        return "Not Completed"
 
     @property
     def process_qty(self):
         return (self.style_no.quantity * self.qty_per_item)
 
     def __str__(self):
-        return f'Process: {self.process_name}, Quantity:{ self.qty_per_item}, Process Quantity:{ self.process_qty},Supplier: {self.supplier}'
+        # return f'Process: {self.process_name}, Quantity:{ self.qty_per_item}, Process Quantity:{ self.process_qty},Supplier: {self.supplier}'
+        return f'Style No - {self.style_no} | Process - {self.process_name} | Processing Status - { self.status}'
 
 
 class MeasurementChart(models.Model):
     mc_name = models.CharField(_("Measurement Chart"), max_length=100)
+    description = models.CharField(
+        _("Short description"), max_length=200, default="measurement chart", help_text=_("eg: Mens Tshirt"))
 
     def __str__(self):
-        return self.mc_name
+        return f'{self.mc_name} | {self.description}'
 
 
 class Measurements(models.Model):
@@ -97,4 +122,4 @@ class Measurements(models.Model):
         default=0, max_digits=5, decimal_places=2)
 
     def __str__(self):
-        return self.mc_name
+        return f'{self.mc_name.mc_name} | {self.size}'
