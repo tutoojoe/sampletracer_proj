@@ -8,7 +8,8 @@ from allauth.account.utils import setup_user_email
 
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
-# the dj-rest-auth is providing user serializer already. So we can use it for development.
+# the dj-rest-auth is providing user serializer already.
+# So we can use it for development.
 
 
 # from useraccounts.models import User

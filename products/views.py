@@ -1,42 +1,25 @@
 from django.shortcuts import render
-from products.models import MeasurementChart, Style
-from products.serializers import MeasurementItemSerializer, MeasurementSerializer, StyleSerializer
+from products.models import MeasurementChart, Style, Measurements, ProductGroup, Colors, StyleCombo
+from products.serializers import StyleCreateSerializer, StyleDetailedSerializer, MeasurementItemSerializer, ProductGroupSerializer, MeasurementSerializer, StyleSerializer, ColorSerializer, StyleComboSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
 from django.http import Http404
-
-
-from products.serializers import StyleDetailedSerializer, StyleCreateSerializer
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
-
-from products.models import ProductGroup
-from products.serializers import ProductGroupSerializer
 
 
 # Create your views here.
+class StylesListView(generics.ListAPIView):
+    queryset = Style.objects.all()
+    serializer_class = StyleSerializer
 
 
-class StylesListView(generics.ListCreateAPIView):
+class StylesCreateView(generics.CreateAPIView):
     """
     Lists out all the styles 
     """
-    queryset = Style.objects.all()
     serializer_class = StyleCreateSerializer
-
-    # class StylesListView(APIView):
-    #     def get(self, request, format=None):
-    #         styles = Style.objects.all()
-    #         serializer = StyleSerializer(styles, many=True)
-    #         return Response(serializer.data)
-
-    #     def post(self, request, format=None):
-
-    #         serializer = StyleSerializer(data=request.data)
-    #         if serializer.is_valid():
-    #             serializer.save()
-    #             return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    queryset = Style.objects.all()
 
 
 class ProductGroupListCreateAPIView(generics.ListCreateAPIView):
@@ -60,13 +43,55 @@ class ProductGroupListCreateAPIView(generics.ListCreateAPIView):
         return Response(serializer.data)
 
 
-class MeasurementListAPIView(generics.ListCreateAPIView):
+class MeasurementChartListCreateView(generics.ListCreateAPIView):
     serializer_class = MeasurementSerializer
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = MeasurementChart.objects.all()
         return queryset
 
 
-class MeasurementItemsListCreateAPIView(generics.ListCreateAPIView):
+class MeasurementsCreateView(generics.CreateAPIView):
     serializer_class = MeasurementItemSerializer
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Measurements.objects.all()
+        return queryset
+
+
+class ColorsListCreateView(generics.ListCreateAPIView):
+    serializer_class = ColorSerializer
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Colors.objects.all()
+        return queryset
+
+
+class ColorsDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ColorSerializer
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Colors.objects.all()
+        return queryset
+
+
+class StyleComboListCreateView(generics.ListCreateAPIView):
+    serializer_class = StyleComboSerializer
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = StyleCombo.objects.all()
+        return queryset
+
+
+class StyleComboDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = StyleComboSerializer
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = StyleCombo.objects.all()
+        return queryset

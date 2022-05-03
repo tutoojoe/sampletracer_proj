@@ -11,13 +11,13 @@ urlpatterns = [
 
     # users
     path('api/users/', UsersListAPIView.as_view(), name='user_list'),
-    path('api/userdetail/<int:pk>/',
+    path('api/users/<int:pk>/',
          UserTypeDetailAPIView.as_view(), name='user_type_detail'),
 
     # customers
     path('api/customers/', CustomerListAPIView.as_view(),
          name='customer_list'),
-    path('api/customerdetail/<int:pk>/',
+    path('api/customers/<int:pk>/',
          CustomerDetailAPIView.as_view(), name='customer_detail'),
 
 

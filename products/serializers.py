@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from products.models import MeasurementChart, Measurements, Season, ProductGroup, Processes, Accessories, Style
+from products.models import MeasurementChart, Measurements, Season, ProductGroup, Processes, Accessories, Style, Colors, StyleCombo
 
 
 class SeasonSerializer(serializers.ModelSerializer):
@@ -35,23 +35,14 @@ class StyleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Style
-        fields = ['style_no', 'style_description', 'season', 'product_group',
-                  'size', 'quantity', 'delivery_date', 'accessories', 'processes']
+        fields = "__all__"
         depth = 0
 
 
 class StyleCreateSerializer(serializers.ModelSerializer):
-    # accessories = serializers.StringRelatedField(many=True, read_only=True)
-    # processes = serializers.StringRelatedField(many=True, read_only=True)
-    # product_group = serializers.StringRelatedField()
-    # season = serializers.StringRelatedField()
-
     class Meta:
         model = Style
         fields = "__all__"
-        # fields = ['style_no', 'style_description', 'season', 'product_group',
-        #           'size', 'quantity', 'delivery_date', 'merchandiser', 'customer']
-        depth = 0
 
 
 class StyleDetailedSerializer(serializers.ModelSerializer):
@@ -88,4 +79,16 @@ class MeasurementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MeasurementChart
+        fields = "__all__"
+
+
+class ColorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Colors
+        fields = "__all__"
+
+
+class StyleComboSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StyleCombo
         fields = "__all__"
