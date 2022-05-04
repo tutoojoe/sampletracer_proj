@@ -3,7 +3,7 @@ from suppliers.views import SupplierListCreateAPIView, SupplierRetrieveUpdateDes
 
 urlpatterns = [
     path('', SupplierListCreateAPIView.as_view(), name="supplier_list"),
-    path('supplierdetail/<int:pk>', SupplierRetrieveUpdateDestroyAPIView.as_view(),
+    path('<int:pk>/', SupplierRetrieveUpdateDestroyAPIView.as_view(),
          name="supplierdetail"),
 
 

@@ -3,7 +3,7 @@ from useraccounts.views import DashboardAPIView, GoogleLogin, UsersListAPIView, 
 
 urlpatterns = [
     # google auth
-    path('api/user/google/', GoogleLogin.as_view(), name='google_login'),
+    #     path('api/user/google/', GoogleLogin.as_view(), name='google_login'),
 
     # dashboard
     path('api/dashboard/', DashboardAPIView.as_view(), name='dashboard'),

@@ -85,9 +85,8 @@ class Accessories(models.Model):
 
     task_status = models.BooleanField(default=False)
     assigned_to = models.ManyToManyField(
-        User, related_name=_("accessory_assigned_to"), blank=True, null=True)
-    assigned_by = models.ManyToManyField(
-        User, blank=True, null=True)
+        User, related_name=_("accessory_assigned_to"))
+    assigned_by = models.ManyToManyField(User)
     target_date = models.DateField(blank=True, null=True)
     finish_date = models.DateField(blank=True, null=True)
 
@@ -120,9 +119,8 @@ class Processes(models.Model):
     task_status = models.BooleanField(default=False)
     task_status = models.BooleanField(default=False)
     assigned_to = models.ManyToManyField(
-        User, related_name=_("process_assigned_to"), blank=True, null=True)
-    assigned_by = models.ManyToManyField(
-        User, blank=True, null=True)
+        User, related_name=_("process_assigned_to"))
+    assigned_by = models.ManyToManyField(User)
     target_date = models.DateField(blank=True, null=True)
     finish_date = models.DateField(blank=True, null=True)
 

@@ -21,6 +21,7 @@ from rest_framework import status
 from rest_framework_simplejwt.views import token_verify
 from rest_framework.views import APIView
 from useraccounts.permissions import MerchUserPermission, NewUserPermission, StoreKeeperPermission
+from django.contrib.auth.decorators import permission_required
 
 
 # if you want to use Authorization Code Grant, use this
@@ -88,10 +89,7 @@ class UserDetailView(generics.RetrieveAPIView):
 
 
 class CustomerListAPIView(generics.ListCreateAPIView):
-    """_Views the list of customers or/and can add customer_
-
-    Args:
-        generics (_type_): _description_
+    """Views the list of customers or/and can add customer
     """
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -114,16 +112,20 @@ class CustomerDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class DashboardAPIView(APIView):
-    permission_classes = [MerchUserPermission]
+    # permission_classes = [
+    #     MerchUserPermission or NewUserPermission or StoreKeeperPermission]
 
+    @permission_required([NewUserPermission])
     def get(self, request, format=None):
 
         return Response({"message": "New user requested dashboard"})
 
+    @permission_required([MerchUserPermission])
     def get(self, request, format=None):
-        permission_classes = [MerchUserPermission]
+
         return Response({"message": "Merch requested dashboard"})
 
+    @permission_required([StoreKeeperPermission])
     def get(self, request, format=None):
-        permission_classes = [StoreKeeperPermission]
-        return Response({"message": "New user requested dashboard"})
+
+        return Response({"message": "storekeeper requested dashboard"})
