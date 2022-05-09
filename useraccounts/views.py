@@ -1,10 +1,6 @@
-# from useraccounts.models import User
 from urllib import response
-from useraccounts.serializers import CustomerSerializer
-from useraccounts.models import Customer
-from useraccounts.serializers import UserTypeUpdateSerializer
-# from useraccounts.models import User
-from useraccounts.serializers import UserSerializer
+from useraccounts.serializers import CustomerSerializer, MerchandiserSerializer, UserTypeUpdateSerializer, UserSerializer
+from useraccounts.models import Customer, Merchandiser
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework import generics
@@ -88,11 +84,35 @@ class UserDetailView(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
-class CustomerListAPIView(generics.ListCreateAPIView):
-    """Views the list of customers or/and can add customer
+class CustomerListAPIView(generics.ListAPIView):
+    """Views the list of customers.
     """
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+
+
+class MerchandiserListAPIView(generics.ListAPIView):
+    """Views the list of Merchandisers.
+    """
+    queryset = Merchandiser.objects.all()
+    serializer_class = MerchandiserSerializer
+
+
+class MerchandiserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    View, Edit, Update or Delete Merchandiser.
+
+    Args:
+        generics (_pk_): _primary key_
+
+    Returns:
+        _object_: _object details_
+    """
+    serializer_class = MerchandiserSerializer
+    permission_classes = []
+
+    def get_queryset(self):
+        return Merchandiser.objects.all()
 
 
 class CustomerDetailAPIView(generics.RetrieveUpdateDestroyAPIView):

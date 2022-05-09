@@ -23,7 +23,7 @@ class AccessoriesSerializer(serializers.ModelSerializer):
 
 class ProcessesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductGroup
+        model = Processes
         fields = "__all__"
 
 
@@ -62,9 +62,10 @@ class StyleDetailedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Style
+        # fields = "__all__"
         fields = ['style_no', 'style_description', 'season', 'season_pk', 'product_group', 'group',
                   'size', 'quantity', 'delivery_date', 'accessories', 'processes']
-        depth = 1
+        # depth = 0
 
 
 class MeasurementItemSerializer(serializers.ModelSerializer):

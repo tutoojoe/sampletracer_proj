@@ -4,6 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.StylesListView.as_view(), name='styles_list'),
+    path('<int:pk>', views.StyleDetailEditUpdateDeleteView.as_view(),
+         name="style_details"),
     path('add_product/', views.StylesCreateView.as_view(), name='add_styles'),
     path('product_groups/', views.ProductGroupListCreateAPIView.as_view(),
          name='product_group_list'),
@@ -17,6 +19,18 @@ urlpatterns = [
     path('stylecombo/', views.StyleComboListCreateView.as_view(), name='stylecombos'),
     path('stylecombo/<int:pk>/',
          views.StyleComboDetailUpdateDeleteView.as_view(), name='stylecombo_detail'),
+
+    path('seasons/', views.SeasonListCreateView.as_view(), name='seasons'),
+    path('seasons/<int:pk>/',
+         views.SeasonDetailEditDeleteView.as_view(), name='season_detail'),
+    path('products/accessories/',
+         views.AccessoriesListCreateView.as_view(), name="accessories"),
+    path('products/accessories/<int:pk>/',
+         views.AccessoriesDetailEditDeleteView.as_view(), name="accessories_detail"),
+    path('products/processes/',
+         views.ProcessesListCreateView.as_view(), name="processes"),
+    path('products/processes/<int:pk>/',
+         views.ProcessDetailEditDeleteView.as_view(), name="processes_detail"),
 
 
 ]
