@@ -23,13 +23,13 @@ urlpatterns = [
     path('seasons/', views.SeasonListCreateView.as_view(), name='seasons'),
     path('seasons/<int:pk>/',
          views.SeasonDetailEditDeleteView.as_view(), name='season_detail'),
-    path('products/accessories/',
+    path('accessories/',
          views.AccessoriesListCreateView.as_view(), name="accessories"),
-    path('products/accessories/<int:pk>/',
+    path('accessories/<int:pk>/',
          views.AccessoriesDetailEditDeleteView.as_view(), name="accessories_detail"),
-    path('products/processes/',
+    path('processes/',
          views.ProcessesListCreateView.as_view(), name="processes"),
-    path('products/processes/<int:pk>/',
+    path('processes/<int:pk>/',
          views.ProcessDetailEditDeleteView.as_view(), name="processes_detail"),
 
 
