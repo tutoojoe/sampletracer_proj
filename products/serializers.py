@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
-from products.models import MeasurementChart, Measurements, Season, ProductGroup, Processes, Accessories, Style, Colors, StyleCombo
+from products.models import (MeasurementChart, Measurements, Season,
+                             ProductGroup, Processes, Accessories, Style,
+                             Colors, StyleCombo)
 
 
 class SeasonSerializer(serializers.ModelSerializer):
@@ -50,7 +52,8 @@ class StyleDetailedSerializer(serializers.ModelSerializer):
     processes = serializers.StringRelatedField(many=True, read_only=True)
     # season = serializers.StringRelatedField()
     group = serializers.PrimaryKeyRelatedField(
-        queryset=ProductGroup.objects.all(), source='product_group', write_only=True
+        queryset=ProductGroup.objects.all(), source='product_group',
+        write_only=True
     )
     season_pk = serializers.PrimaryKeyRelatedField(
         queryset=Season.objects.all(), source='season', write_only=True
@@ -63,8 +66,9 @@ class StyleDetailedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Style
         # fields = "__all__"
-        fields = ['style_no', 'style_description', 'season', 'season_pk', 'product_group', 'group',
-                  'size', 'quantity', 'delivery_date', 'accessories', 'processes']
+        fields = ['style_no', 'style_description', 'season', 'season_pk',
+                  'product_group', 'group', 'size', 'quantity',
+                  'delivery_date', 'accessories', 'processes']
         # depth = 0
 
 

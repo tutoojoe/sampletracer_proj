@@ -6,6 +6,7 @@ urlpatterns = [
     #     path('api/user/google/', GoogleLogin.as_view(), name='google_login'),
 
     # dashboard
+    #     path('', connect, name='server'),
     path('api/dashboard/', DashboardAPIView.as_view(), name='dashboard'),
 
 

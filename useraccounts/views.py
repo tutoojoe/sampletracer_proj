@@ -33,6 +33,11 @@ class GoogleLogin(SocialLoginView):
 User = get_user_model()
 
 
+# @sio.event
+# def connect(sid, environ):
+#     print(sid, 'connected')
+
+
 class UsersListAPIView(generics.ListAPIView):
     """
     Lists out all the uses in the project. View is limited to admin user only.
