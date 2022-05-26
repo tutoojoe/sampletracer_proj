@@ -1,22 +1,24 @@
 
 from django.shortcuts import render
-from products.models import (Accessories, Processes, MeasurementChart,
-                             Style, Measurements, ProductGroup, Colors,
-                             Season, StyleCombo)
-from products.serializers import (AccessoriesSerializer, ProcessesSerializer,
-                                  SeasonSerializer, StyleCreateSerializer,
-                                  StyleDetailedSerializer,
-                                  MeasurementItemSerializer,
-                                  ProductGroupSerializer,
-                                  MeasurementSerializer,
-                                  StyleSerializer, ColorSerializer,
-                                  StyleComboSerializer)
+from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
-from django.http import Http404
 from rest_framework.permissions import (IsAdminUser, IsAuthenticated,
                                         IsAuthenticatedOrReadOnly)
+from .models import (Accessories, Processes, MeasurementChart,
+                     Style, Measurements, ProductGroup, Colors,
+                     Season, StyleCombo)
+from .serializers import (AccessoriesSerializer, ProcessesSerializer,
+                          SeasonSerializer, StyleCreateSerializer,
+                          StyleDetailedSerializer,
+                          MeasurementItemSerializer,
+                          ProductGroupSerializer,
+                          MeasurementSerializer,
+                          StyleSerializer, ColorSerializer,
+                          StyleComboSerializer)
+
+
 from socketio_server import sio
 
 
@@ -436,7 +438,8 @@ class StyleComboListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class StyleComboDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+class StyleComboDetailUpdateDeleteView(APIView):
+    # class StyleComboDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     # serializer_class = StyleComboSerializer
     # # permission_classes = [IsAuthenticated]
 
