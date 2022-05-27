@@ -11,6 +11,7 @@ from .managers import CustomUserManager
 class User(AbstractUser):
 
     class UserTypes(models.TextChoices):
+        ADMINUSER = "ADMINUSER", "AdminUser"
         NEWUSER = "NEWUSER", "NewUser"
         MERCHANDISER = "MERCHANDISER", "Merchandiser"
         CUSTOMER = "CUSTOMER", "Customer"
@@ -31,7 +32,7 @@ class User(AbstractUser):
         return reverse("model_detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return self.email
+        return f'{self.first_name} {self.last_name} - {self.email}'
 
 
 class NewUserManager(models.Manager):
@@ -146,4 +147,4 @@ class CustomerMore(models.Model):
     country = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.customer.email
+        return f'{self.customer.first_name} - {self.customer.email}'

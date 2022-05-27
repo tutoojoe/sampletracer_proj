@@ -1,4 +1,3 @@
-from argparse import Namespace
 import socketio
 import eventlet
 

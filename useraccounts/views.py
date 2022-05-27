@@ -19,6 +19,8 @@ from rest_framework.views import APIView
 from useraccounts.permissions import MerchUserPermission, NewUserPermission, StoreKeeperPermission
 from django.contrib.auth.decorators import permission_required
 
+from dj_rest_auth.views import LoginView
+
 
 # if you want to use Authorization Code Grant, use this
 class GoogleLogin(SocialLoginView):
@@ -36,6 +38,13 @@ User = get_user_model()
 # @sio.event
 # def connect(sid, environ):
 #     print(sid, 'connected')
+
+class UserLoginView(LoginView):
+    def get_response(self):
+        data = {
+            'username': self.user,
+        }
+        return super().get_response(*args, **kwargs)
 
 
 class UsersListAPIView(generics.ListAPIView):

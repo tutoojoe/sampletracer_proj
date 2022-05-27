@@ -1,5 +1,6 @@
 from django.urls import path
-from useraccounts.views import DashboardAPIView, GoogleLogin, UsersListAPIView, UserTypeDetailAPIView, CustomerListAPIView, CustomerDetailAPIView, MerchandiserListAPIView, MerchandiserDetailAPIView
+from useraccounts.views import (DashboardAPIView, GoogleLogin, UsersListAPIView, UserTypeDetailAPIView,
+                                CustomerListAPIView, CustomerDetailAPIView, MerchandiserListAPIView, MerchandiserDetailAPIView)
 
 urlpatterns = [
     # google auth
@@ -14,6 +15,7 @@ urlpatterns = [
     path('api/users/', UsersListAPIView.as_view(), name='user_list'),
     path('api/users/<int:pk>/',
          UserTypeDetailAPIView.as_view(), name='user_type_detail'),
+
 
     # customers
     path('api/customers/', CustomerListAPIView.as_view(),
