@@ -39,13 +39,6 @@ User = get_user_model()
 # def connect(sid, environ):
 #     print(sid, 'connected')
 
-class UserLoginView(LoginView):
-    def get_response(self):
-        data = {
-            'username': self.user,
-        }
-        return super().get_response(*args, **kwargs)
-
 
 class UsersListAPIView(generics.ListAPIView):
     """
