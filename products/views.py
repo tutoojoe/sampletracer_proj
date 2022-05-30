@@ -23,27 +23,39 @@ from socketio_server import sio
 
 
 # Create your views here.
+from rest_framework import mixins
+from rest_framework import generics
 
-class ProcessesListCreateView(APIView):
+
+class ProcessesListCreateView(mixins.ListModelMixin,
+                              mixins.CreateModelMixin,
+                              generics.GenericAPIView):
+
+    # class ProcessesListCreateView(APIView):
     # class ProcessesListCreateView(generics.ListCreateAPIView):
     """
     Lists out the processes or Create a Process in a style"""
-    # serializer_class = ProcessesSerializer
-    # queryset = Processes.objects.all()
+    serializer_class = ProcessesSerializer
+    queryset = Processes.objects.all()
 
-    def get(self, request, format=None):
-        product_groups = Processes.objects.all()
-        serializer = ProcessesSerializer(product_groups, many=True)
-        return Response(serializer.data)
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-    @sio.event
-    def post(self, request, format=None):
-        serializer = ProcessesSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            sio.emit('process_added', {'msg': 'process_added'})
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    # def get(self, request, format=None):
+    #     serializer = ProcessesSerializer(style_processes, many=True)
+    #     return Response(serializer.data)
+
+    # @sio.event
+    # def post(self, request, format=None):
+    #     serializer = ProcessesSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         sio.emit('process_added', {'msg': 'process_added'})
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProcessDetailEditDeleteView(APIView):
@@ -280,24 +292,38 @@ class StyleDetailEditUpdateDeleteView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ProductGroupListCreateAPIView(APIView):
+# class ProductGroupListCreateAPIView(APIView):
+class ProductGroupListCreateAPIView(mixins.ListModelMixin,
+                                    mixins.CreateModelMixin,
+                                    generics.GenericAPIView):
     """
     List all snippets, or create a new snippet.
     """
+    queryset = ProductGroup.objects.all()
+    serializer_class = ProductGroupSerializer
 
-    def get(self, request, format=None):
-        product_groups = ProductGroup.objects.all()
-        serializer = ProductGroupSerializer(product_groups, many=True)
-        return Response(serializer.data)
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-    @sio.event
-    def post(self, request, format=None):
-        serializer = ProductGroupSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            # sio.emit('product_added', {'msg': 'product_added'})
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        sio.emit('product_group_added', {
+            'msg': 'product group added'})
+        return self.create(request, *args, **kwargs)
+
+#    def get(self, request, format=None):
+#         product_groups = ProductGroup.objects.all()
+#         serializer = ProductGroupSerializer(product_groups, many=True)
+#         return Response(serializer.data)
+
+#     # @sio.event
+#     def post(self, request, format=None):
+#         serializer = ProductGroupSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             sio.emit('product_group_added', {
+#                      'msg': 'product group added', 'group_name': serializer.data['product_group']})
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class ProductGroupListCreateAPIView(generics.ListCreateAPIView):

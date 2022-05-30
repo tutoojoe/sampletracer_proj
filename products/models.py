@@ -117,7 +117,7 @@ class Processes(models.Model):
     supplier = models.ForeignKey(
         Suppliers, on_delete=models.SET_NULL, blank=True, null=True)
     task_status = models.BooleanField(default=False)
-    task_status = models.BooleanField(default=False)
+
     assigned_to = models.ManyToManyField(
         User, related_name=_("process_assigned_to"))
     assigned_by = models.ManyToManyField(User)
