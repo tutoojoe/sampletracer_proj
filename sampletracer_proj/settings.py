@@ -44,6 +44,15 @@ INSTALLED_APPS = [
     'useraccounts',
     'products',
     'suppliers',
+    'sio_server',
+    'processes',
+    'accessories',
+    'measurements',
+    'product_colors',
+    'product_combo',
+    'product_groups',
+    'product_seasons',
+
 
     'rest_framework',
     'rest_framework.authtoken',

@@ -1,6 +1,5 @@
 from django.contrib import admin
-from products.models import Style
+from .models import StyleCombo
 
 # Register your models here.
-
-admin.site.register(Style)
+admin.site.register(StyleCombo)

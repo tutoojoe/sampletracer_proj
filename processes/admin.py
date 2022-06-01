@@ -1,6 +1,5 @@
 from django.contrib import admin
-from products.models import Style
+from .models import Processes
 
 # Register your models here.
-
-admin.site.register(Style)
+admin.site.register(Processes)

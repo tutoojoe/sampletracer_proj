@@ -31,10 +31,18 @@ urlpatterns = [
     path('', include('useraccounts.urls')),
     # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # user related api paths
     path('api/user/', include('dj_rest_auth.urls')),
     path('api/user_registration/', include('dj_rest_auth.registration.urls')),
 
+    # product related api paths
     path('api/products/', include('products.urls')),
+    path('api/product_groups/', include('product_combo.urls')),
+    path('api/processes/', include('processes.urls')),
+    path('api/accessories/', include('accessories.urls')),
+    path('api/measurements/', include('measurements.urls')),
+    path('api/colors/', include('product_colors.urls')),
+    path('api/stylecombo/', include('product_combo.urls')),
     path('api/suppliers/', include('suppliers.urls')),
 
 
