@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'product_combo',
     'product_groups',
     'product_seasons',
+    'comments',
 
 
     'rest_framework',

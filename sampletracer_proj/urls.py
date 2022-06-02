@@ -44,6 +44,7 @@ urlpatterns = [
     path('api/colors/', include('product_colors.urls')),
     path('api/stylecombo/', include('product_combo.urls')),
     path('api/suppliers/', include('suppliers.urls')),
+    path('api/comments/', include('comments.urls')),
 
 
     # dynamic schema for openapi
