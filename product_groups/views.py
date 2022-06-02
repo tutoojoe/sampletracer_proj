@@ -29,6 +29,9 @@ class ProductGroupDetailUpdateDeleteView(mixins.RetrieveModelMixin,
                                          mixins.UpdateModelMixin,
                                          mixins.DestroyModelMixin,
                                          generics.GenericAPIView):
+    queryset = ProductGroup.objects.all()
+    serializer_class = ProductGroupSerializer
+
     def get(self, request, *args, **kwargs):
         """Retrieves a single object based on the given pk"""
         return self.retrieve(request, *args, **kwargs)

@@ -46,5 +46,5 @@ class CommentsInAStyleView(generics.ListAPIView):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        style = self.kwargs['style']
+        style = self.kwargs['pk']
         return Comments.objects.filter(style=style)

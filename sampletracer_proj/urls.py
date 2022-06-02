@@ -37,8 +37,9 @@ urlpatterns = [
 
     # product related api paths
     path('api/products/', include('products.urls')),
-    path('api/product_groups/', include('product_combo.urls')),
+    path('api/product_groups/', include('product_groups.urls')),
     path('api/processes/', include('processes.urls')),
+    path('api/seasons/', include('product_seasons.urls')),
     path('api/accessories/', include('accessories.urls')),
     path('api/measurements/', include('measurements.urls')),
     path('api/colors/', include('product_colors.urls')),
